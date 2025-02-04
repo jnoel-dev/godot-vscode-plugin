@@ -210,10 +210,11 @@ export function make_symbol_document(symbol: GodotNativeSymbol): string {
 
 	if (symbol.kind === SymbolKind.Class) {
 		let doc = element("h2", `Class: ${symbol.name}`);
-		if (symbol.class_info.inherits) {
-			const inherits = make_link(symbol.class_info.inherits, undefined);
-			doc += element("p", `Inherits: ${inherits}`);
+		let inherits = "";
+		for (const c of symbol.class_info.inherited_classes) {
+			inherits += (inherits ? " < " : " ") + make_link(c, c);
 		}
+		doc += element("p", `Inherits:${inherits}`);
 
 		if (symbol.class_info?.extended_classes) {
 			let inherited = "";

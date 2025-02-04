@@ -50,8 +50,17 @@ export class GDDocumentationProvider implements CustomReadonlyEditorProvider {
 					this.classInfo.set(gdclass.inherits, {
 						name: gdclass.inherits,
 						inherits: "",
-					});
+					});			
 				}
+
+				const inherited_classes = this.classInfo.get(gdclass.name).inherited_classes || [];
+				let inherited_class_to_add = gdclass.inherits
+				while (inherited_class_to_add){
+					inherited_classes.push(inherited_class_to_add)
+					inherited_class_to_add = this.classInfo.get(inherited_class_to_add).inherits
+				}		
+				this.classInfo.get(gdclass.name).inherited_classes = inherited_classes;
+
 				const extended_classes = this.classInfo.get(gdclass.inherits).extended_classes || [];
 				extended_classes.push(gdclass.name);
 				this.classInfo.get(gdclass.inherits).extended_classes = extended_classes;

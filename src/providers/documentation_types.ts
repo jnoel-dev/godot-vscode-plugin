@@ -23,6 +23,7 @@ export interface GodotNativeClassInfo {
 	name: string;
 	inherits: string;
 	extended_classes?: string[];
+	inherited_classes?: string[];
 }
 
 export interface GodotCapabilities {
